@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<server description="new server">
+    <featureManager>
+        <feature>javaee-7.0</feature>
+        <feature>localConnector-1.0</feature>
+    </featureManager>
+    <httpEndpoint id="defaultHttpEndpoint" host="*" httpPort="9080" httpsPort="9443"/>
+    <applicationManager autoExpand="true"/>
+    <application name="PlantsByWebSphere" type="war" id="PlantsByWebSphere" location="PlantsByWebSphere.war" context-root="PlantsByWebSphere"/>
+    <basicRegistry id="basic" realm="BasicRealm"> 
+        <user name="dev" password="dev"/>
+    </basicRegistry>
+    <variable name="DERBY_JDBC_DRIVER_PATH" value="${server.config.dir}/lib"/>
+    <library id="DerbyLib">
+        <fileset dir="${server.config.dir}/lib/" includes="derby-*.jar"/>
+    </library>
+
+    <dataSource jndiName="jdbc/PlantsByWebSphereDataSource">
+        <jdbcDriver libraryRef="DerbyLib"/>
+        <properties.derby.embedded createDatabase="create" databaseName="memory:PLANTSDB"/>
+    </dataSource>
+    <dataSource jndiName="jdbc/PlantsByWebSphereDataSourceNONJTA" transactional="false">
+        <jdbcDriver libraryRef="DerbyLib"/>
+        <properties.derby.embedded createDatabase="create" databaseName="memory:PLANTSDB"/>
+    </dataSource>
+    <ssl id="defaultSSLConfig" trustDefaultCerts="true" />
+</server>
+
