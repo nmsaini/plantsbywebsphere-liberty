@@ -4,4 +4,4 @@ RUN features.sh
 
 COPY --chown=1001:0 app/*.ear /config/apps
 RUN configure.sh
-
+USER 1001
